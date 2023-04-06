@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  mongodb:
+    container_name: mongo-dev
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=bip
+      - MONGO_INITDB_ROOT_PASSWORD=bipmongopassword
+    ports:
+      - '27017:27017'
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart:
+      always
+    depends_on:
+      - mongodb
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=bip
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=bipmongopassword
+      - ME_CONFIG_MONGODB_SERVER=mongo-dev
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=bipmongopassword
+    ports:
+      - '8081:8081'
